@@ -1,0 +1,157 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #090b11;
+  padding: 10px 0;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 60px;
+}
+
+header h1 {
+  font-size: 30px;
+}
+
+header nav ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+header nav ul li a {
+  color: #ddd;
+  margin-left: 20px;
+  font-size: 14px;
+  position: relative;
+  padding-bottom: 5px;
+}
+
+header nav ul li a:hover {
+  color: #fff;
+}
+
+header nav ul li a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #fff;
+  transition: width 0.3s ease;
+}
+
+header nav ul li a:hover::after {
+  width: 100%;
+}
+
+.hero h1 {
+  font-size: 50px;
+  margin: 0;
+}
+
+.hero p {
+  font-size: 20px;
+  margin: 20px 0;
+}
+
+.hero .btn {
+  background-color: #ffd700;
+  color: white;
+  padding: 12px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.hero .btn:hover {
+  background-color: #ffa500;
+}
+
+.content {
+  padding: 0 60px;
+}
+
+.deskripsi {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.deskripsi p {
+  line-height: 1.6;
+}
+
+.cards {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.card {
+  background-color: white;
+  padding: 20px;
+  width: 250px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.card h3 {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.card p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.card a.btn {
+  background-color: #090b11;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 40px;
+}
+
+.card a.btn:hover {
+  background-color: #575757;
+}
+
+footer {
+  background-color: #090b11;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+  position: relative;
+  margin-top: auto;
+}

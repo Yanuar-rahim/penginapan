@@ -1,0 +1,443 @@
+html,
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #f4f4f4;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  flex: 1;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+header {
+  position: fixed;
+  width: 91%;
+  top: 0;
+  z-index: 1000;
+  background-color: #090b11;
+  padding: 10px 0;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 60px;
+}
+
+header h1 {
+  font-size: 30px;
+}
+
+header nav ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+header nav ul li a {
+  color: #ddd;
+  margin-left: 20px;
+  font-size: 14px;
+  position: relative;
+  padding-bottom: 5px;
+}
+
+header nav ul li a:hover {
+  color: #fff;
+}
+
+header nav ul li a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #fff;
+  transition: width 0.3s ease;
+}
+
+header nav ul li a:hover::after {
+  width: 100%;
+}
+
+main {
+  flex: 1;
+  margin-top: 74px;
+}
+
+.hero h1 {
+  font-size: 50px;
+  margin: 0;
+}
+
+.hero p {
+  font-size: 20px;
+  margin: 20px 0;
+  color: #fff;
+}
+
+.hero .btn {
+  background-color: #ffd700;
+  color: white;
+  padding: 12px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.hero .btn:hover {
+  background-color: #ffa500;
+}
+
+.content {
+  padding: 0 60px;
+  flex: 1;
+}
+
+.deskripsi {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.deskripsi p {
+  line-height: 1.6;
+}
+
+.cards {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.card {
+  background-color: white;
+  padding: 20px;
+  width: 250px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.card h3 {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.card p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.card a.btn {
+  background-color: #090b11;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 40px;
+}
+
+.card a.btn:hover {
+  background-color: #575757;
+}
+
+.available-rooms {
+  padding: 50px 0;
+}
+
+.available-rooms h2 {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.room-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
+
+.room-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+}
+
+.room-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.room-card-text {
+  padding: 5px 20px 20px 20px;
+}
+
+.room-card h3 {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.room-card p {
+  font-size: 16px;
+  color: #333;
+}
+
+.room-card .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.room-card .btn:hover {
+  background-color: #45a049;
+}
+
+.about-us {
+  padding: 50px 0;
+  text-align: center;
+}
+
+.about-us h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.about-us p {
+  font-size: 16px;
+  color: #333;
+}
+
+.search-filter {
+  padding: 20px;
+  text-align: center;
+}
+
+.search-filter form {
+  margin-bottom: 20px;
+}
+
+.search-filter input[type="text"],
+.search-filter select {
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.search-filter button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-filter button:hover {
+  background-color: #45a049;
+}
+
+form.reservation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  margin: 20px;
+}
+
+.reservation-form .form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 5px;
+}
+
+.reservation-form input[type="date"] {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.riwayat-reservasi {
+  padding: 20px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th,
+table td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+  background-color: #e0e0e0;
+}
+
+a {
+  color: #4caf50;
+  text-decoration: none;
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+footer {
+  background-color: #090b11;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+  position: relative;
+  margin-top: auto;
+
+  margin-top: auto;
+}
+
+.alert-success {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #d1fae5;
+  color: #065f46;
+  border-left: 5px solid #10b981;
+  padding: 15px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  z-index: 9999;
+  animation: fadeInOut 5s forwards;
+}
+
+.alert-error {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #fef2f2;
+  color: #f87171;
+  border-left: 5px solid #f87171;
+  padding: 15px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  z-index: 9999;
+  animation: fadeInOut 5s forwards;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+.badge {
+  display: inline-block;
+  padding: 5px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 12px;
+  text-transform: capitalize;
+}
+
+.ditolak {
+  background-color: #f1948a;
+  color: #7f1c1c;
+}
+
+.dipesan {
+  background-color: #f7c02e;
+  color: #8c5e06;
+}
+
+.konfirmasi {
+  background-color: #5dade2;
+  color: #1f618d;
+}
+
+.selesai {
+  background-color: #58d68d;
+  color: #1d8348;
+}
+
+.batal {
+  background-color: #f1948a;
+  color: #7f1c1c;
+}
