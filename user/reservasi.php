@@ -1,94 +1,94 @@
 <?php
-    session_start();
-    include "../config/koneksi.php";
+session_start();
+include "../config/koneksi.php";
 
 
-    if (!isset($_SESSION['role']) || $_SESSION['role'] != 'user') {
-        header("Location: ../login.php");
-        exit;
-    }
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'user') {
+    header("Location: ../index.php");
+    exit;
+}
 
-    $user_id = $_SESSION['user_id'];
-    $query_user = mysqli_query($koneksi, "SELECT * FROM users WHERE id = '$user_id'");
-    $user = mysqli_fetch_assoc($query_user);
-
-
-    $alertSuccess = "";
-    $alertError = "";
+$user_id = $_SESSION['user_id'];
+$query_user = mysqli_query($koneksi, "SELECT * FROM users WHERE id = '$user_id'");
+$user = mysqli_fetch_assoc($query_user);
 
 
-    if (isset($_SESSION['success'])) {
-        $alertSuccess = $_SESSION['success'];
-        unset($_SESSION['success']);
-    }
-
-    if (isset($_SESSION['error'])) {
-        $alertError = $_SESSION['error'];
-        unset($_SESSION['error']);
-    }
+$alertSuccess = "";
+$alertError = "";
 
 
-    $query_tipe_kamar = mysqli_query($koneksi, "SELECT DISTINCT tipe_kamar FROM kamar WHERE status = 'tersedia'");
+if (isset($_SESSION['success'])) {
+    $alertSuccess = $_SESSION['success'];
+    unset($_SESSION['success']);
+}
+
+if (isset($_SESSION['error'])) {
+    $alertError = $_SESSION['error'];
+    unset($_SESSION['error']);
+}
 
 
-    $search = isset($_GET['search']) ? $_GET['search'] : '';
-    $filter = isset($_GET['filter']) ? $_GET['filter'] : '';
+$query_tipe_kamar = mysqli_query($koneksi, "SELECT DISTINCT tipe_kamar FROM kamar WHERE status = 'tersedia'");
 
 
-    $query_kamar = "SELECT * FROM kamar WHERE nama_kamar LIKE '%$search%' AND status = 'tersedia'";
-
-    if ($filter) {
-        $query_kamar .= " AND tipe_kamar = '$filter'";
-    }
-
-    $query_kamar .= " LIMIT 6";
-
-    $kamar_result = mysqli_query($koneksi, $query_kamar);
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+$filter = isset($_GET['filter']) ? $_GET['filter'] : '';
 
 
-    if (isset($_POST['pesan'])) {
-        $nama_lengkap = $_POST['nama_lengkap'];
-        $nama_kamar = $_POST['nama_kamar'];
-        $check_in = $_POST['check_in'];
-        $check_out = $_POST['check_out'];
-        $gambar = $_POST['gambar'];
+$query_kamar = "SELECT * FROM kamar WHERE nama_kamar LIKE '%$search%' AND status = 'tersedia'";
+
+if ($filter) {
+    $query_kamar .= " AND tipe_kamar = '$filter'";
+}
+
+$query_kamar .= " LIMIT 6";
+
+$kamar_result = mysqli_query($koneksi, $query_kamar);
 
 
-        if (strtotime($check_in) >= strtotime($check_out)) {
-            $_SESSION['error'] = "Tanggal check-out harus lebih besar dari check-in!";
-            header("Location: reservasi.php");
-            exit;
-        }
+if (isset($_POST['pesan'])) {
+    $nama_lengkap = $_POST['nama_lengkap'];
+    $nama_kamar = $_POST['nama_kamar'];
+    $check_in = $_POST['check_in'];
+    $check_out = $_POST['check_out'];
+    $gambar = $_POST['gambar'];
 
 
-        $query_harga = "SELECT harga FROM kamar WHERE nama_kamar = '$nama_kamar'";
-        $result_harga = mysqli_query($koneksi, $query_harga);
-        $harga_kamar = mysqli_fetch_assoc($result_harga)['harga'];
-
-
-        $total_harga = $harga_kamar * (strtotime($check_out) - strtotime($check_in)) / 86400;
-
-
-        $query_reservasi = "INSERT INTO reservasi (nama_lengkap, nama_kamar, check_in, check_out, total_harga, gambar, status)
-                                VALUES ('$nama_lengkap', '$nama_kamar', '$check_in', '$check_out', '$total_harga', '$gambar', 'dipesan')";
-
-        if (mysqli_query($koneksi, $query_reservasi)) {
-            $_SESSION['success'] = "Reservasi berhasil dilakukan!";
-        } else {
-            $_SESSION['error'] = "Gagal melakukan reservasi.";
-        }
-
-
+    if (strtotime($check_in) >= strtotime($check_out)) {
+        $_SESSION['error'] = "Tanggal check-out harus lebih besar dari check-in!";
         header("Location: reservasi.php");
         exit;
     }
 
 
-    $query_website = mysqli_query($koneksi, "SELECT value FROM settings WHERE setting_key = 'website_name'");
-    $website = mysqli_fetch_assoc($query_website);
+    $query_harga = "SELECT harga FROM kamar WHERE nama_kamar = '$nama_kamar'";
+    $result_harga = mysqli_query($koneksi, $query_harga);
+    $harga_kamar = mysqli_fetch_assoc($result_harga)['harga'];
 
 
-    $website_name = $website['value'];
+    $total_harga = $harga_kamar * (strtotime($check_out) - strtotime($check_in)) / 86400;
+
+
+    $query_reservasi = "INSERT INTO reservasi (nama_lengkap, nama_kamar, check_in, check_out, total_harga, gambar, status)
+                                VALUES ('$nama_lengkap', '$nama_kamar', '$check_in', '$check_out', '$total_harga', '$gambar', 'dipesan')";
+
+    if (mysqli_query($koneksi, $query_reservasi)) {
+        $_SESSION['success'] = "Reservasi berhasil dilakukan!";
+    } else {
+        $_SESSION['error'] = "Gagal melakukan reservasi.";
+    }
+
+
+    header("Location: reservasi.php");
+    exit;
+}
+
+
+$query_website = mysqli_query($koneksi, "SELECT value FROM settings WHERE setting_key = 'website_name'");
+$website = mysqli_fetch_assoc($query_website);
+
+
+$website_name = $website['value'];
 ?>
 
 <!DOCTYPE html>
@@ -135,30 +135,36 @@
                 <div class="container">
                     <h3 align="center">Kamar Tersedia</h3>
                     <div class="room-grid">
-                        <?php while ($kamar = mysqli_fetch_assoc($kamar_result)) { ?>
-                            <div class="room-card">
-                                <img src="../assets/uploads/<?= $kamar['gambar']; ?>" alt="<?= $kamar['nama_kamar']; ?>"
-                                    class="room-img">
-                                <h4><?= $kamar['nama_kamar']; ?></h4>
-                                <p>Harga: Rp. <?= number_format($kamar['harga'], 0, ',', '.'); ?>/malam</p>
-                                <p><?= substr($kamar['deskripsi'], 0, 100); ?>...</p>
-                                <form method="POST" action="reservasi.php" class="reservation-form">
-                                    <input type="hidden" name="nama_kamar" value="<?= $kamar['nama_kamar']; ?>">
-                                    <input type="hidden" name="nama_lengkap" value="<?= $user['nama_lengkap']; ?>">
-                                    <input type="hidden" name="gambar" value="<?= $kamar['gambar']; ?>">
-                                    <div class="form-group">
-                                        <label for="check_in">Check-in:</label>
-                                        <input type="date" name="check_in" required>
-                                    </div>
-                                    <div class="form-group" style="margin-bottom: 15px;">
-                                        <label for="check_out">Check-out:</label>
-                                        <input type="date" name="check_out" required>
-                                    </div>
-                                    <button type="submit" name="pesan">Pesan Sekarang</button>
-                                </form>
+                        <?php if (mysqli_num_rows($kamar_result) > 0): ?>
+                            <?php while ($kamar = mysqli_fetch_assoc($kamar_result)) { ?>
+                                <div class="room-card">
+                                    <img src="../assets/uploads/<?= $kamar['gambar']; ?>" alt="<?= $kamar['nama_kamar']; ?>"
+                                        class="room-img">
+                                    <h4><?= $kamar['nama_kamar']; ?></h4>
+                                    <p>Harga: Rp. <?= number_format($kamar['harga'], 0, ',', '.'); ?>/malam</p>
+                                    <p><?= substr($kamar['deskripsi'], 0, 100); ?>...</p>
+                                    <form method="POST" action="reservasi.php" class="reservation-form">
+                                        <input type="hidden" name="nama_kamar" value="<?= $kamar['nama_kamar']; ?>">
+                                        <input type="hidden" name="nama_lengkap" value="<?= $user['nama_lengkap']; ?>">
+                                        <input type="hidden" name="gambar" value="<?= $kamar['gambar']; ?>">
+                                        <div class="form-group">
+                                            <label for="check_in">Check-in:</label>
+                                            <input type="date" name="check_in" required>
+                                        </div>
+                                        <div class="form-group" style="margin-bottom: 15px;">
+                                            <label for="check_out">Check-out:</label>
+                                            <input type="date" name="check_out" required>
+                                        </div>
+                                        <button type="submit" name="pesan">Pesan Sekarang</button>
+                                    </form>
+                                </div>
+                            <?php } ?>
+                        </div>
+                        <?php else: ?>
+                            <div class="no-data-found">
+                                <p>Tidak ada data ditemukan</p>
                             </div>
-                        <?php } ?>
-                    </div>
+                        <?php endif; ?>
                 </div>
             </section>
         </section>

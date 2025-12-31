@@ -1,8 +1,8 @@
 html,
 body {
-    height: 100%;  /* Memastikan body memenuhi seluruh tinggi layar */
-    display: flex;  /* Menggunakan flexbox */
-    flex-direction: column;  /* Menyusun elemen secara vertikal */
+  height: 100%; /* Memastikan body memenuhi seluruh tinggi layar */
+  display: flex; /* Menggunakan flexbox */
+  flex-direction: column; /* Menyusun elemen secara vertikal */
 }
 
 body {
@@ -438,4 +438,15 @@ footer {
 .batal {
   background-color: #f1948a;
   color: #7f1c1c;
+}
+
+.no-data-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* Sesuaikan tinggi sesuai kebutuhan */
+  font-size: 18px;
+  color: #666;
+  text-align: center;
+  width: 100%;
 }
