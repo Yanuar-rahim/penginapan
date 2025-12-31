@@ -1,68 +1,31 @@
 <?php
-    session_start();
-    include "../config/koneksi.php";
+session_start();
+include "../config/koneksi.php";
 
-    $no = 1;
+$no = 1;
 
-    if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-        header("Location: ../index.php");
-        exit;
-    }
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
+    header("Location: ../index.php");
+    exit;
+}
 
-    $search = isset($_GET['search']) ? $_GET['search'] : '';
-    $filter = isset($_GET['filter']) ? $_GET['filter'] : '';
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+$filter = isset($_GET['filter']) ? $_GET['filter'] : '';
 
-    $query_kamar = "SELECT * FROM kamar WHERE nama_kamar LIKE '%$search%'";
+$query_kamar = "SELECT * FROM kamar WHERE nama_kamar LIKE '%$search%'";
 
-    $query_kamar_result = mysqli_query($koneksi, $query_kamar);
+$query_kamar_result = mysqli_query($koneksi, $query_kamar);
 
-    $alertSuccess = "";
-    if (isset($_SESSION['success'])) {
-        $alertSuccess = $_SESSION['success'];
-        unset($_SESSION['success']);
-    }
+$alertSuccess = "";
+if (isset($_SESSION['success'])) {
+    $alertSuccess = $_SESSION['success'];
+    unset($_SESSION['success']);
+}
 
-    $query_website = mysqli_query($koneksi, "SELECT value FROM settings WHERE setting_key = 'website_name'");
-    $website = mysqli_fetch_assoc($query_website);
+$query_website = mysqli_query($koneksi, "SELECT value FROM settings WHERE setting_key = 'website_name'");
+$website = mysqli_fetch_assoc($query_website);
 
-    $website_name = $website['value'];  
-
-    if (isset($_POST['export_excel'])) {
-        header("Content-type: application/vnd.ms-excel");
-        header("Content-Disposition: attachment; filename=data-kamar.xls");
-
-        echo "No\tNama Kamar\tTipe\tHarga\tGambar\n";
-
-        $query_kamar_excel = mysqli_query($koneksi, "SELECT * FROM kamar");
-        while ($row = mysqli_fetch_assoc($query_kamar_excel)) {
-            echo $no++ . "\t" . $row['nama_kamar'] . "\t" . $row['tipe_kamar'] . "\t" . $row['harga'] . "\t" . $row['gambar'] . "\n";
-        }
-
-        exit();
-    }
-
-    if (isset($_POST['export_pdf'])) {
-        echo '<style>table { width: 100%; border-collapse: collapse; } table, th, td { border: 1px solid black; padding: 8px; text-align: left; } th { background-color: #f2f2f2; }</style>';
-        echo '<h1>Daftar Kamar</h1>';
-        echo '<table>';
-        echo '<thead>';
-        echo '<tr><th>No</th><th>Nama Kamar</th><th>Harga</th><th>Gambar</th></tr>';
-        echo '</thead><tbody>';
-
-        while ($row = mysqli_fetch_assoc($query_kamar_result)) {
-            echo '<tr>';
-            echo '<td>' . $no++ . '</td>';
-            echo '<td>' . $row['nama_kamar'] . '</td>';
-            echo '<td>' . $row['harga'] . '</td>';
-            echo '<td><img src="../assets/uploads/' . $row['gambar'] . '" alt="' . $row['nama_kamar'] . '" style="width: 200px; height: 120px; margin-bottom: 20px; object-fit: cover;"></td>';
-            echo '</tr>';
-        }
-
-        echo '</tbody></table>';
-        echo '<script>window.print();</script>';
-        exit();
-    }
-
+$website_name = $website['value'];
 ?>
 
 <!DOCTYPE html>
@@ -101,8 +64,11 @@
 
                 <form method="post" class="nav">
                     <div style="display: flex; gap: 5px;">
-                        <button type="submit" name="export_pdf" class="btn-primary">Export PDF</button>
-                        <button type="submit" name="export_excel" class="btn-primary">Export Excel</button>
+                        <!-- Arahkan tombol ke file export_excel.php dan export_pdf.php -->
+                        <button type="submit" name="export_pdf" class="btn-primary" formaction="export_pdf.php">Export
+                            PDF</button>
+                        <button type="submit" name="export_excel" class="btn-primary"
+                            formaction="export_excel.php">Export Excel</button>
                     </div>
                     <a href="tambah_kamar.php" class="btn-primary">Tambah Kamar</a>
                 </form>
