@@ -1,24 +1,27 @@
 <?php
-    session_start();
-    include "../config/koneksi.php";
+session_start();
+include "../config/koneksi.php";
 
-    $no = 1;
+$no = 1;
 
-    if (!isset($_SESSION['role']) || $_SESSION['role'] != 'user') {
-        header("Location: ../login.php");
-        exit;
-    }
+// Pastikan user sudah login dengan role 'user'
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'user') {
+    header("Location: ../login.php");
+    exit;
+}
 
-    $user_id = $_SESSION['user_id'];
-    $query_user = mysqli_query($koneksi, "SELECT * FROM users WHERE id = '$user_id'");
-    $user = mysqli_fetch_assoc($query_user);
+// Ambil ID pengguna yang sedang login
+$user_id = $_SESSION['user_id'];
+$query_user = mysqli_query($koneksi, "SELECT * FROM users WHERE id = '$user_id'");
+$user = mysqli_fetch_assoc($query_user);
 
-    $query_reservasi = mysqli_query($koneksi, "SELECT * FROM reservasi WHERE nama_lengkap = '$user[nama_lengkap]' ORDER BY check_in DESC");
+// Ambil daftar reservasi berdasarkan nama lengkap pengguna yang sedang login
+$query_reservasi = mysqli_query($koneksi, "SELECT * FROM reservasi WHERE nama_lengkap = '$user[nama_lengkap]' ORDER BY check_in DESC");
 
-    $query_website = mysqli_query($koneksi, "SELECT value FROM settings WHERE setting_key = 'website_name'");
-    $website = mysqli_fetch_assoc($query_website);
-
-    $website_name = $website['value'];
+// Ambil nama website
+$query_website = mysqli_query($koneksi, "SELECT value FROM settings WHERE setting_key = 'website_name'");
+$website = mysqli_fetch_assoc($query_website);
+$website_name = $website['value'];
 ?>
 
 <!DOCTYPE html>
@@ -54,6 +57,7 @@
                             <th>Tanggal Check-out</th>
                             <th>Total Harga</th>
                             <th>Status</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,11 +72,20 @@
                                     <td><span
                                             class="badge <?= strtolower($reservasi['status']); ?>"><?= ucfirst($reservasi['status']); ?></span>
                                     </td>
+                                    <td>
+                                        <?php
+                                        if ($reservasi['status'] == 'konfirmasi' && $reservasi['nama_lengkap'] == $user['nama_lengkap']) {
+                                            echo '<a href="cetak_bukti.php?id_reservasi=' . $reservasi['id_reservasi'] . '" class="btn download" target="_blank">Cetak Bukti</a>';
+                                        } else {
+                                            echo 'Tidak ada aksi';
+                                        }
+                                        ?>
+                                    </td>
                                 </tr>
                             <?php } ?>
                         <?php } else { ?>
                             <tr>
-                                <td colspan="6">Belum ada reservasi yang dilakukan. Silakan lakukan pemesanan kamar melalui
+                                <td colspan="7">Belum ada reservasi yang dilakukan. Silakan lakukan pemesanan kamar melalui
                                     halaman <a href="reservasi.php">Pemesanan Kamar</a>.</td>
                             </tr>
                         <?php } ?>
@@ -84,8 +97,8 @@
             </div>
         </section>
 
-        <?php include '../includes/footer.php'; ?>
     </main>
+    <?php include '../includes/footer.php'; ?>
 
 </body>
 

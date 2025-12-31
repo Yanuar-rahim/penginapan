@@ -150,12 +150,11 @@
     <?php include '../includes/header-user.php'; ?>
 
     <!-- Main Content -->
-    <main class="content">
-
+    <main>
 
         <section class="profil-user">
             <div class="container">
-                <h2>Profil Saya</h2>
+                <h2 style="margin-top: 40px;">Profil Saya</h2>
 
                 <?php if ($err): ?>
                     <div class="alert error"><?= $err; ?></div>

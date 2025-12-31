@@ -51,6 +51,7 @@
         $nama_kamar = $_POST['nama_kamar'];
         $check_in = $_POST['check_in'];
         $check_out = $_POST['check_out'];
+        $gambar = $_POST['gambar'];
 
 
         if (strtotime($check_in) >= strtotime($check_out)) {
@@ -68,8 +69,8 @@
         $total_harga = $harga_kamar * (strtotime($check_out) - strtotime($check_in)) / 86400;
 
 
-        $query_reservasi = "INSERT INTO reservasi (nama_lengkap, nama_kamar, check_in, check_out, total_harga, status)
-                                VALUES ('$nama_lengkap', '$nama_kamar', '$check_in', '$check_out', '$total_harga', 'dipesan')";
+        $query_reservasi = "INSERT INTO reservasi (nama_lengkap, nama_kamar, check_in, check_out, total_harga, gambar, status)
+                                VALUES ('$nama_lengkap', '$nama_kamar', '$check_in', '$check_out', '$total_harga', '$gambar', 'dipesan')";
 
         if (mysqli_query($koneksi, $query_reservasi)) {
             $_SESSION['success'] = "Reservasi berhasil dilakukan!";
@@ -144,6 +145,7 @@
                                 <form method="POST" action="reservasi.php" class="reservation-form">
                                     <input type="hidden" name="nama_kamar" value="<?= $kamar['nama_kamar']; ?>">
                                     <input type="hidden" name="nama_lengkap" value="<?= $user['nama_lengkap']; ?>">
+                                    <input type="hidden" name="gambar" value="<?= $kamar['gambar']; ?>">
                                     <div class="form-group">
                                         <label for="check_in">Check-in:</label>
                                         <input type="date" name="check_in" required>
@@ -160,9 +162,8 @@
                 </div>
             </section>
         </section>
-
-        <?php include '../includes/footer.php'; ?>
     </main>
+    <?php include '../includes/footer.php'; ?>
 
 </body>
 

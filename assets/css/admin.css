@@ -104,6 +104,22 @@ img {
   animation: fadeInOut 5s forwards;
 }
 
+.alert-error {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #fef2f2;
+  color: #f87171;
+  border-left: 5px solid #f87171;
+  padding: 15px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  z-index: 9999;
+  animation: fadeInOut 5s forwards;
+}
+
 @keyframes fadeInOut {
   0% {
     opacity: 0;

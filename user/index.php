@@ -63,6 +63,7 @@
         background-size: cover;
         background-position: center;
         padding: 150px 20px;
+        margin-top: 60px;
         color: white;
         text-align: center;
     }
@@ -81,17 +82,17 @@
 
     <?php include '../includes/header-user.php'; ?>
 
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h1>Selamat Datang, <?= $user['nama_lengkap']; ?></h1>
-                <p>Temukan kenyamanan dan kualitas terbaik di penginapan kami. Pilih kamar terbaik untuk pengalaman
-                    menginap Anda.</p>
-                <a href="reservasi.php" class="btn">Reservasi Sekarang</a>
-            </div>
-        </section>
+    <section class="hero">
+        <div class="container">
+            <h1>Selamat Datang, <?= $user['nama_lengkap']; ?></h1>
+            <p>Temukan kenyamanan dan kualitas terbaik di penginapan kami. Pilih kamar terbaik untuk pengalaman
+                menginap Anda.</p>
+            <a href="reservasi.php" class="btn">Reservasi Sekarang</a>
+        </div>
+    </section>
 
-        <section class="content">
+    <main>
+        <section>
             <section class="available-rooms">
                 <div class="container">
                     <h2>Kamar Tersedia</h2>
