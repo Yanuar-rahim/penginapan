@@ -6,7 +6,7 @@ $no = 1;
 
 // Pastikan user sudah login dengan role 'user'
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'user') {
-    header("Location: ../login.php");
+    header("Location: ../index.php");
     exit;
 }
 
